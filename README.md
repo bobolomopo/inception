@@ -6,7 +6,7 @@ Vous allez virtualiser plusieurs images Docker en les créant dans votre nouvell
 virtuelle personnelle.
 
 ## Statut
-Terminé
+**Terminé**
 
 ## Remerciements
 Je remercie tout ceux qui ont cru en moi malgré les difficulté, merci maman et papa.
