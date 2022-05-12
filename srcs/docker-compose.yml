@@ -1,6 +1,10 @@
 version: '3'
-services:
 
+networks:
+  frontend:
+  backend:
+
+services:
   nginx:
     build: requirements/nginx/
     container_name: nginx
@@ -8,7 +12,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - "c:/Users/Ajuln/raco2/volumes/website:/var/www/html"
+      - "~/home/jandre/data/website:/var/www/html"
     depends_on:
       - wordpress
     networks:
@@ -21,10 +25,9 @@ services:
     ports:
       - "9000:9000"
     volumes:
-      - "c:/Users/Ajuln/raco2/volumes/website:/var/www/html"
+      - "~/home/jandre/data/website:/var/www/html"
     depends_on:
       - mariadb
-      - redis
     networks:
       - frontend
       - backend
@@ -42,8 +45,6 @@ services:
       WP_USR:           ${WP_USR}
       WP_PWD:           ${WP_PWD}
       WP_EMAIL:         ${WP_EMAIL}
-      REDIS_HOST:       ${REDIS_HOST}
-      REDIS_PWD:        ${REDIS_PWD}
 
   mariadb:
     build: requirements/mariadb/
@@ -51,7 +52,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - "c:/Users/Ajuln/raco2/volumes/mariadb:/var/lib/mysql"
+      - "~/home/jandre/data/mariadb:/var/lib/mysql"
     networks:
       - backend
     restart: always
@@ -61,6 +62,4 @@ services:
       WP_DATABASE_USR:  ${WP_DATABASE_USR}
       WP_DATABASE_PWD:  ${WP_DATABASE_PWD}
 
-networks:
-  frontend:
-  backend:
+

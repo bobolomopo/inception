@@ -3,7 +3,7 @@ NAME = inception
 all: prune reload
 
 linux:
-	@ echo "127.0.0.1 raccoman.42.fr" >> /etc/hosts
+	@ sudo sh -c 'echo "127.0.0.1 jandre.42.be" >> /etc/hosts'
 	
 stop:
 	@ docker-compose -f srcs/docker-compose.yml down
