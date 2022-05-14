@@ -1,20 +1,20 @@
 NAME = inception
 
-all: prune reload
+all: reload
 
 linux:
 	@ sudo sh -c 'echo "127.0.0.1 jandre.42.be" >> /etc/hosts'
 	
 stop:
-	@ docker-compose -f srcs/docker-compose.yml down
+	@ cd srcs && docker-compose down && cd ..
 
 clean: stop
-	@ rm -rf ~/home/jandre/data/*
+	@ sudo rm -rf ~/home/jandre/data/*
 
 prune: clean
 	@ docker system prune -f
 
 reload: 
-	@ docker-compose -f srcs/docker-compose.yml up --build
+	@ cd srcs && docker-compose up --build --remove-orphan && cd ..
 
 .PHONY: linux stop clean prune reload all

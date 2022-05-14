@@ -3,21 +3,6 @@ version: '3'
 networks:
   inception:
 
-volumes:
-  website:
-    driver: local
-    name: website
-    driver_opts:
-      type: none
-      o: bind
-      device: ~/home/jandre/data/wordpress
-  mariadb:
-    driver: local
-    name: mariadb
-    driver_opts:
-      type: none
-      o: bind
-      device: ~/home/jandre/data/mariadb
 
 services:
   nginx:
@@ -27,7 +12,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - website:/var/www/html
+      - ~/home/jandre/data/website:/var/www/html
     depends_on:
       - wordpress
     networks:
@@ -40,7 +25,7 @@ services:
     ports:
       - "9000:9000"
     volumes:
-      - website:/var/www/html
+      - ~/home/jandre/data/website:/var/www/html
     depends_on:
       - mariadb
     networks:
@@ -66,7 +51,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - mariadb:/var/lib/mysql
+      - ~/home/jandre/data/mariadb:/var/lib/mysql
     networks:
       - inception
     restart: always
@@ -76,4 +61,17 @@ services:
       WP_DATABASE_USR:  ${WP_DATABASE_USR}
       WP_DATABASE_PWD:  ${WP_DATABASE_PWD}
 
+volumes:
+  website:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ~/home/jandre/data/website
+  mariadb:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ~/home/jandre/data/mariadb
 
