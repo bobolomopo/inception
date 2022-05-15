@@ -1,19 +1,16 @@
-FROM alpine:3.14
+FROM debian:buster
 
-RUN	apk update && apk upgrade && apk add --no-cache \
-        nginx \
-        openssl
+RUN apt-get update
+RUN apt-get install -y nginx openssl
 
-# nginx SSL
+EXPOSE 443
+
+COPY ./conf/default /etc/nginx/sites-enabled/default
+
 RUN mkdir /etc/nginx/ssl
 RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
-        -out /etc/nginx/ssl/jandre.pem \
-        -keyout /etc/nginx/ssl/jandre.key \
-        -subj "/C=BE/ST=Bruxelles/L=Bruxellese/O=19/OU=jandre/CN=jandre/"
+        -out /etc/nginx/ssl/nginx.pem \
+        -keyout /etc/nginx/ssl/nginx.key \
+        -subj "/C=BE/ST=Bruxelles/L=Bruxelles/O=19/OU=jandre/CN=jandre/"
 
-# nginx config
-RUN mkdir -p /run/nginx
-COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
-
-# Start nginx
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
