@@ -2,15 +2,15 @@ server {
     listen 443 ssl;
     listen [::]:443 ssl;
 
-    server_name localhost;
+    server_name jandre.42.fr;
 
     ssl_certificate /etc/nginx/ssl/nginx.pem;
     ssl_certificate_key /etc/nginx/ssl/nginx.key;
     ssl_protocols TLSv1.3;
 
-    index index.php;
+    index index.php wordpress/index.php;
 
-    root /var/www/html;
+    root /var/www/html/;
 
     location / {
         try_files $uri $uri/ /index.php$is_args$args;
